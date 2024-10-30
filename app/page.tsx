@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { CoinTickers } from "@/services/tickers/types";
 import { CoinTickersService } from "@/services/tickers";
+import Table from "@/components/Table";
 
 const Home = () => {
   const [data, setData] = useState<CoinTickers[]>([]);
@@ -24,58 +25,7 @@ const Home = () => {
   }
   return (
     <div className="w-full h-[60%] max-w-[40rem] bg-white rounded-lg shadow-lg">
-      <div className="flex flex-col md:hidden">
-        {data.map((coinTicker, idx) => {
-          const { id, name, symbol, price_usd, tsupply } = coinTicker;
-          return (
-            <div
-              key={id}
-              className={`p-2 ${idx % 2 === 0 ? "bg-gray-300" : "bg-white"}`}
-            >
-              <div className="grid grid-cols-2 gap-2">
-                <div className="text-left font-medium text-sm">
-                  💰 Coin: {name}
-                </div>
-                <div className="text-left font-medium text-sm">
-                  📄 Code: {symbol}
-                </div>
-                <div className="text-left font-medium text-sm">
-                  🤑 Price: {price_usd}
-                </div>
-                <div className="text-left font-medium text-sm">
-                  📈 Total Supply: {tsupply}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <table className="hidden md:table w-full">
-        <thead>
-          <tr>
-            <th className="text-left p-2">💰 Coin</th>
-            <th className="text-left">📄 Code</th>
-            <th className="text-left">🤑 Price</th>
-            <th className="text-left">📈 Total Supply</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((coinTicker, index) => {
-            const { id, name, symbol, price_usd, tsupply } = coinTicker;
-            return (
-              <tr
-                key={id}
-                className={index % 2 === 0 ? "bg-gray-300" : "bg-white"}
-              >
-                <td className="text-left font-medium p-2">{name}</td>
-                <td className="text-left font-medium p-2">{symbol}</td>
-                <td className="text-left font-medium p-2">{price_usd}</td>
-                <td className="text-left font-medium p-2">{tsupply}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Table data={data} />
       <div className="flex justify-between items-center p-3">
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
